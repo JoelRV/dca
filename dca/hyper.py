@@ -57,7 +57,7 @@ def hyper(args):
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
                  dropout, input_dropout, ridge, l1_enc_coef):
 	
-	K.clear_session()
+        K.clear_session()
         net = AE_types[aetype](train_data[1].shape[1],
                 hidden_size=hidden_size,
                 l2_coef=0.0,
