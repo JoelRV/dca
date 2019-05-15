@@ -10,6 +10,7 @@ from keras import backend as K
 
 from . import io
 from .network import AE_types
+import gc
 
 
 def hyper(args):
@@ -59,6 +60,7 @@ def hyper(args):
                  dropout, input_dropout, ridge, l1_enc_coef):
 	
         K.clear_session()
+        gc.collect()
         net = AE_types[aetype](train_data[1].shape[1],
                 hidden_size=hidden_size,
                 l2_coef=0.0,
