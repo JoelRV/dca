@@ -6,6 +6,7 @@ import numpy as np
 from kopt import CompileFN, test_fn
 from hyperopt import fmin, tpe, hp, Trials
 import keras.optimizers as opt
+from keras import backend as K
 
 from . import io
 from .network import AE_types
