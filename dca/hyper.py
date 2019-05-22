@@ -84,7 +84,8 @@ def hyper(args):
                           logtrans_input=norm_input_log,
                           normalize_input=norm_input_zeromean)
 
-        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+        #x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+        x_train = ad.X
         y_train = ad.raw.X
 
         return ((x_train, y_train))
