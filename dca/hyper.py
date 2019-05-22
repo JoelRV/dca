@@ -94,9 +94,9 @@ def hyper(args):
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
                  dropout, input_dropout, ridge, l1_enc_coef):
         
-        print("Backend is" + K.backend())
+        print("Backend is " + K.backend())
         print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-        print(" Tuple size of adata" + str(adata.shape()))
+        print(" Tuple size of adata" + str(adata.shape))
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
