@@ -85,7 +85,7 @@ def hyper(args):
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
 
         ad = io.read_dataset(args.input,
-                            transpose=args.transpose,
+                            transpose=(not args.transpose),
                             test_split=False)
                             
         ad = io.normalize(ad,
