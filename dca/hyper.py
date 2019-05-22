@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+from sys import getsizeof
 
 import numpy as np
 from kopt import CompileFN, test_fn
@@ -94,7 +95,8 @@ def hyper(args):
                  dropout, input_dropout, ridge, l1_enc_coef):
         
         print("Backend is" + K.backend())
-        print(" MB size of train_data" + (train_data.nbytes/1000000))
+        print(" MB size of train_data" + (getsizeof(train_data)/1000000))
+        print(" Tuple size of adata" + adata.shape())
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
