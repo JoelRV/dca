@@ -93,7 +93,7 @@ def hyper(args):
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         #x_train = ad.X
         y_train = ad.raw.X
-
+        del ad
         return (x_train, y_train),
 
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
@@ -126,7 +126,6 @@ def hyper(args):
         
         snapshot = tracemalloc.take_snapshot()
         display_top(snapshot)
-        del ad
 
         return net.model
 
