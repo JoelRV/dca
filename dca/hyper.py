@@ -103,7 +103,6 @@ def hyper(args):
         
         print("Backend is " + K.backend())
         print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-        print(" Tuple size of adata" + str(ad.shape))
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
