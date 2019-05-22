@@ -58,7 +58,8 @@ def hyper(args):
 
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
                  dropout, input_dropout, ridge, l1_enc_coef):
-    
+        
+        print(K.backend())
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
