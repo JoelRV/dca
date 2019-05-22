@@ -15,7 +15,7 @@ from . import io
 def data_fn(inputData,inTranspose, norm_input_log, norm_input_zeromean, norm_input_sf):
 
     ad = io.read_dataset(inputData,
-                        transpose=(inTranspose),
+                        transpose=(not inTranspose),
                         test_split=False)
                         
     ad = io.normalize(ad,
