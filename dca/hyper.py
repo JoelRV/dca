@@ -52,10 +52,10 @@ def hyper(args):
                             transpose=args.transpose,
                             test_split=False)
                             
-    adata = io.normalize(adata,
-                         size_factors=args.sizefactors,
-                         logtrans_input=args.loginput,
-                         normalize_input=args.norminput)
+#    adata = io.normalize(adata,
+#                         size_factors=args.sizefactors,
+#                         logtrans_input=args.loginput,
+#                         normalize_input=args.norminput)
 
     hyper_params = {
             "data": {
@@ -83,16 +83,16 @@ def hyper(args):
     }
 
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-#
-#        ad = adata.copy()
-#        ad = io.normalize(ad,
-#                          size_factors=norm_input_sf,
-#                          logtrans_input=norm_input_log,
-#                          normalize_input=norm_input_zeromean)
 
-        x_train = {'count': adata.X, 'size_factors': adata.obs.size_factors}
+        ad = adata.copy()
+        ad = io.normalize(ad,
+                          size_factors=norm_input_sf,
+                          logtrans_input=norm_input_log,
+                          normalize_input=norm_input_zeromean)
+
+        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         #x_train = ad.X
-        y_train = adata.raw.X
+        y_train = ad.raw.X
 
         return (x_train, y_train),
 
@@ -126,7 +126,7 @@ def hyper(args):
         
         snapshot = tracemalloc.take_snapshot()
         display_top(snapshot)
-
+        del ad
 
         return net.model
 
