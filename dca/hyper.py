@@ -48,10 +48,10 @@ tracemalloc.start()
 
 
 def hyper(args):
-    adata = io.read_dataset(args.input,
-                            transpose=args.transpose,
-                            test_split=False)
-                            
+#    adata = io.read_dataset(args.input,
+#                            transpose=args.transpose,
+#                            test_split=False)
+#                            
 #    adata = io.normalize(adata,
 #                         size_factors=args.sizefactors,
 #                         logtrans_input=args.loginput,
@@ -84,7 +84,10 @@ def hyper(args):
 
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
 
-        ad = adata.copy()
+        ad = io.read_dataset(args.input,
+                            transpose=args.transpose,
+                            test_split=False)
+                            
         ad = io.normalize(ad,
                           size_factors=norm_input_sf,
                           logtrans_input=norm_input_log,
@@ -93,7 +96,6 @@ def hyper(args):
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         #x_train = ad.X
         y_train = ad.raw.X
-        del ad
         return (x_train, y_train),
 
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
@@ -101,7 +103,7 @@ def hyper(args):
         
         print("Backend is " + K.backend())
         print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-        print(" Tuple size of adata" + str(adata.shape))
+        print(" Tuple size of adata" + str(ad.shape))
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
