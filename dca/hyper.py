@@ -18,6 +18,9 @@ import linecache
 import os
 import tracemalloc
 
+from . import data
+from . import model
+
 def display_top(snapshot, key_type='lineno', limit=10):
     snapshot = snapshot.filter_traces((
         tracemalloc.Filter(False, "<frozen importlib._bootstrap>"),
@@ -82,52 +85,6 @@ def hyper(args):
                 }
     }
 
-    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-
-        ad = adata.copy()
-        ad = io.normalize(ad,
-                          size_factors=norm_input_sf,
-                          logtrans_input=norm_input_log,
-                          normalize_input=norm_input_zeromean)
-
-        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-        #x_train = ad.X
-        y_train = ad.raw.X
-        del ad
-        return (x_train, y_train),
-
-    def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
-                 dropout, input_dropout, ridge, l1_enc_coef):
-        
-        print("Backend is " + K.backend())
-        print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-        print(" Tuple size of adata" + str(adata.shape))
-        if K.backend() == 'tensorflow':
-          K.clear_session()
-        gc.collect()
-        net = AE_types[aetype](train_data[1].shape[1],
-                hidden_size=hidden_size,
-                l2_coef=0.0,
-                l1_coef=0.0,
-                l2_enc_coef=0.0,
-                l1_enc_coef=l1_enc_coef,
-                ridge=ridge,
-                hidden_dropout=dropout,
-                input_dropout=input_dropout,
-                batchnorm=batchnorm,
-                activation=activation,
-                init='glorot_uniform',
-                debug=args.debug)
-        net.build()
-        net.model.summary()
-
-        optimizer = opt.__dict__['rmsprop'](lr=lr, clipvalue=5.0)
-        net.model.compile(loss=net.loss, optimizer=optimizer)
-        
-        snapshot = tracemalloc.take_snapshot()
-        display_top(snapshot)
-
-        return net.model
 
     output_dir = os.path.join(args.outputdir, 'hyperopt_results')
     objective = CompileFN('autoencoder_hyperpar_db', 'myexp1',
