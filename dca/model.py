@@ -8,12 +8,12 @@ Created on Wed May 22 16:45:38 2019
 def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
              dropout, input_dropout, ridge, l1_enc_coef):
     
-#    print("Backend is " + K.backend())
-#    print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-#    print(" Tuple size of adata" + str(adata.shape))
-#    if K.backend() == 'tensorflow':
-#      K.clear_session()
-#    gc.collect()
+    print("Backend is " + K.backend())
+    print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
+    print(" Tuple size of adata" + str(adata.shape))
+    if K.backend() == 'tensorflow':
+      K.clear_session()
+    gc.collect()
     net = AE_types[aetype](train_data[1].shape[1],
             hidden_size=hidden_size,
             l2_coef=0.0,
