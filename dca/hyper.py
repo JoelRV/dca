@@ -13,6 +13,8 @@ from . import io
 from .network import AE_types
 import gc
 
+from . import data
+from . import model
 
 import linecache
 import os
@@ -59,6 +61,8 @@ def hyper(args):
 
     hyper_params = {
             "data": {
+                "inputData": hp.choice('d_input', (args.input, args.input)),
+                "inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
                 "norm_input_log": hp.choice('d_norm_log', (True, False)),
                 "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
                 "norm_input_sf": hp.choice('d_norm_sf', (True, False)),
@@ -82,61 +86,61 @@ def hyper(args):
                 }
     }
 
-    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-
-        ad = io.read_dataset(args.input,
-                            transpose=(not args.transpose),
-                            test_split=False)
-                            
-        ad = io.normalize(ad,
-                          size_factors=norm_input_sf,
-                          logtrans_input=norm_input_log,
-                          normalize_input=norm_input_zeromean)
-
-        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-        #x_train = ad.X
-        y_train = ad.raw.X
-        del ad
-        gc.collect()
-        return (x_train, y_train),
-
-    def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
-                 dropout, input_dropout, ridge, l1_enc_coef):
-        
-        print("Backend is " + K.backend())
-        print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-#        if K.backend() == 'tensorflow':
-#          K.clear_session()
-        gc.collect()
-        print(train_data[1].shape[1])
-        net = AE_types[aetype](train_data[1].shape[1],
-                hidden_size=hidden_size,
-                l2_coef=0.0,
-                l1_coef=0.0,
-                l2_enc_coef=0.0,
-                l1_enc_coef=l1_enc_coef,
-                ridge=ridge,
-                hidden_dropout=dropout,
-                input_dropout=input_dropout,
-                batchnorm=batchnorm,
-                activation=activation,
-                init='glorot_uniform',
-                debug=args.debug)
-        net.build()
-        net.model.summary()
-
-        optimizer = opt.__dict__['rmsprop'](lr=lr, clipvalue=5.0)
-        net.model.compile(loss=net.loss, optimizer=optimizer)
-        
-        snapshot = tracemalloc.take_snapshot()
-        display_top(snapshot)
-
-        return net.model
+#    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
+#
+#        ad = io.read_dataset(args.input,
+#                            transpose=(not args.transpose),
+#                            test_split=False)
+#                            
+#        ad = io.normalize(ad,
+#                          size_factors=norm_input_sf,
+#                          logtrans_input=norm_input_log,
+#                          normalize_input=norm_input_zeromean)
+#
+#        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+#        #x_train = ad.X
+#        y_train = ad.raw.X
+#        del ad
+#        gc.collect()
+#        return (x_train, y_train),
+#
+#    def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
+#                 dropout, input_dropout, ridge, l1_enc_coef):
+#        
+#        print("Backend is " + K.backend())
+#        print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
+##        if K.backend() == 'tensorflow':
+##          K.clear_session()
+#        gc.collect()
+#        print(train_data[1].shape[1])
+#        net = AE_types[aetype](train_data[1].shape[1],
+#                hidden_size=hidden_size,
+#                l2_coef=0.0,
+#                l1_coef=0.0,
+#                l2_enc_coef=0.0,
+#                l1_enc_coef=l1_enc_coef,
+#                ridge=ridge,
+#                hidden_dropout=dropout,
+#                input_dropout=input_dropout,
+#                batchnorm=batchnorm,
+#                activation=activation,
+#                init='glorot_uniform',
+#                debug=args.debug)
+#        net.build()
+#        net.model.summary()
+#
+#        optimizer = opt.__dict__['rmsprop'](lr=lr, clipvalue=5.0)
+#        net.model.compile(loss=net.loss, optimizer=optimizer)
+#        
+#        snapshot = tracemalloc.take_snapshot()
+#        display_top(snapshot)
+#
+#        return net.model
 
     output_dir = os.path.join(args.outputdir, 'hyperopt_results')
     objective = CompileFN('autoencoder_hyperpar_db', 'myexp1',
-                          data_fn=data_fn,
-                          model_fn=model_fn,
+                          data_fn=data.data_fn,
+                          model_fn=model.model_fn,
                           loss_metric='loss',
                           loss_metric_mode='min',
                           valid_split=.2,
