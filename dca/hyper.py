@@ -84,8 +84,8 @@ def hyper(args):
                           logtrans_input=norm_input_log,
                           normalize_input=norm_input_zeromean)
 
-        #x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-        x_train = ad.X
+        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+        #x_train = ad.X
         y_train = ad.raw.X
 
         return (x_train, y_train),
@@ -94,6 +94,7 @@ def hyper(args):
                  dropout, input_dropout, ridge, l1_enc_coef):
         
         print("Backend is" + K.backend())
+        print(" MB size of train_data" + (train_data.nbytes/1000000))
         if K.backend() == 'tensorflow':
           K.clear_session()
         gc.collect()
