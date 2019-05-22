@@ -81,7 +81,6 @@ def read_dataset(adata, transpose=False, test_split=False, copy=False):
     adata.obs['dca_split'] = adata.obs['dca_split'].astype('category')
     print('dca: Successfully preprocessed {} genes and {} cells.'.format(adata.n_vars, adata.n_obs))
     
-    adata.filename = "/tmp/dca_cache.h5ad"
     return adata
 
 

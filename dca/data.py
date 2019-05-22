@@ -17,6 +17,7 @@ def data_fn(inputData,inTranspose, norm_input_log, norm_input_zeromean, norm_inp
     ad = io.read_dataset(inputData,
                         transpose=(not inTranspose),
                         test_split=False)
+    ad = ad.copy(filename="/tmp/dca_cahce.h5ad")
                         
     ad = io.normalize(ad,
                       size_factors=norm_input_sf,
