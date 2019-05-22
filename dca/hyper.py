@@ -88,7 +88,7 @@ def hyper(args):
 
     output_dir = os.path.join(args.outputdir, 'hyperopt_results')
     objective = CompileFN('autoencoder_hyperpar_db', 'myexp1',
-                          data_fn=data.data_fn(adata),
+                          data_fn=data.data_fn,
                           model_fn=model.model_fn,
                           loss_metric='loss',
                           loss_metric_mode='min',
