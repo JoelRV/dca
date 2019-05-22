@@ -56,7 +56,7 @@ def read_dataset(adata, transpose=False, test_split=False, copy=False):
         if copy:
             adata = adata.copy()
     elif isinstance(adata, str):
-        adata = sc.read(adata, first_column_names=True, cache=True)
+        adata = sc.read(adata, first_column_names=True, cache=True, backed=True)
     else:
         raise NotImplementedError
 
