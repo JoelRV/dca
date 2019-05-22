@@ -96,6 +96,8 @@ def hyper(args):
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         #x_train = ad.X
         y_train = ad.raw.X
+        del ad
+        gc.collect()
         return (x_train, y_train),
 
     def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
