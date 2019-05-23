@@ -86,7 +86,7 @@ def hyper(args):
                 }
     }
 
-    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
+    def data_fn():
 
 
         x_train = {'count': adata.X, 'size_factors': adata.obs.size_factors}
