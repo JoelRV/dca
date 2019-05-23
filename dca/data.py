@@ -9,22 +9,27 @@ Created on Wed May 22 17:34:34 2019
 from . import io
 
 
+def data_fn(inputData):
 
-
-
-def data_fn(inputData,inTranspose, norm_input_log, norm_input_zeromean, norm_input_sf):
-
-    ad = io.read_dataset(inputData,
-                        transpose=(not inTranspose),
-                        test_split=False)
-    ad = ad.copy(filename="/tmp/dca_cahce.h5ad")
-                        
-    ad = io.normalize(ad,
-                      size_factors=norm_input_sf,
-                      logtrans_input=norm_input_log,
-                      normalize_input=norm_input_zeromean)
-
-    x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+    x_train = {'count': inputData.X, 'size_factors': inputData.obs.size_factors}
     #x_train = ad.X
-    y_train = ad.raw.X
+    y_train = inputData.raw.X
     return (x_train, y_train),
+
+
+#def data_fn(inputData,inTranspose, norm_input_log, norm_input_zeromean, norm_input_sf):
+#
+#    ad = io.read_dataset(inputData,
+#                        transpose=(not inTranspose),
+#                        test_split=False)
+#    ad = ad.copy(filename="/tmp/dca_cahce.h5ad")
+#                        
+#    ad = io.normalize(ad,
+#                      size_factors=norm_input_sf,
+#                      logtrans_input=norm_input_log,
+#                      normalize_input=norm_input_zeromean)
+#
+#    x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+#    #x_train = ad.X
+#    y_train = ad.raw.X
+#    return (x_train, y_train),

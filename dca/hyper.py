@@ -50,22 +50,22 @@ tracemalloc.start()
 
 
 def hyper(args):
-#    adata = io.read_dataset(args.input,
-#                            transpose=args.transpose,
-#                            test_split=False)
-#                            
-#    adata = io.normalize(adata,
-#                         size_factors=args.sizefactors,
-#                         logtrans_input=args.loginput,
-#                         normalize_input=args.norminput)
+    adata = io.read_dataset(args.input,
+                            transpose=args.transpose,
+                            test_split=False)
+                            
+    adata = io.normalize(adata,
+                         size_factors=args.sizefactors,
+                         logtrans_input=args.loginput,
+                         normalize_input=args.norminput)
 
     hyper_params = {
             "data": {
-                "inputData": hp.choice('d_input', (args.input, args.input)),
-                "inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
-                "norm_input_log": hp.choice('d_norm_log', (True, False)),
-                "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
-                "norm_input_sf": hp.choice('d_norm_sf', (True, False)),
+                "inputData": hp.choice('d_input', (adata, adata)),
+#                "inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
+#                "norm_input_log": hp.choice('d_norm_log', (True, False)),
+#                "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
+#                "norm_input_sf": hp.choice('d_norm_sf', (True, False)),
                 },
             "model": {
                 "lr": hp.loguniform("m_lr", np.log(1e-3), np.log(1e-2)),
