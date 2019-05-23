@@ -51,7 +51,7 @@ tracemalloc.start()
 
 def hyper(args):
     adata = io.read_dataset(args.input,
-                            transpose=args.transpose,
+                            transpose=(not args.transpose),
                             test_split=False)
                             
     adata = io.normalize(adata,
