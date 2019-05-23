@@ -61,7 +61,7 @@ def hyper(args):
 
     hyper_params = {
             "data": {
-                "inputData": hp.choice('d_input', (adata, adata)),
+#                "inputData": hp.choice('d_input', (adata, adata)),
 #                "inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
 #                "norm_input_log": hp.choice('d_norm_log', (True, False)),
 #                "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
@@ -86,24 +86,15 @@ def hyper(args):
                 }
     }
 
-#    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-#
-#        ad = io.read_dataset(args.input,
-#                            transpose=(not args.transpose),
-#                            test_split=False)
-#                            
-#        ad = io.normalize(ad,
-#                          size_factors=norm_input_sf,
-#                          logtrans_input=norm_input_log,
-#                          normalize_input=norm_input_zeromean)
-#
-#        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-#        #x_train = ad.X
-#        y_train = ad.raw.X
-#        del ad
-#        gc.collect()
-#        return (x_train, y_train),
-#
+    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
+
+
+        x_train = {'count': adata.X, 'size_factors': adata.obs.size_factors}
+        #x_train = ad.X
+        y_train = adata.raw.X
+        gc.collect()
+        return (x_train, y_train),
+
 #    def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
 #                 dropout, input_dropout, ridge, l1_enc_coef):
 #        
@@ -139,7 +130,7 @@ def hyper(args):
 
     output_dir = os.path.join(args.outputdir, 'hyperopt_results')
     objective = CompileFN('autoencoder_hyperpar_db', 'myexp1',
-                          data_fn=data.data_fn,
+                          data_fn=data_fn,
                           model_fn=model.model_fn,
                           loss_metric='loss',
                           loss_metric_mode='min',
