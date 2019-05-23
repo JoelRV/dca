@@ -70,7 +70,7 @@ def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
             batchnorm=batchnorm,
             activation=activation,
             init='glorot_uniform',
-            debug=False)
+            debug=True)
     net.build()
     net.model.summary()
 
