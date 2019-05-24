@@ -90,9 +90,9 @@ def hyper(args):
         
         ad = adata.copy()
         ad = io.normalize(ad,
-                     size_factors=norm_input_log,
-                     logtrans_input=norm_input_zeromean,
-                     normalize_input=norm_input_sf)
+                     size_factors=norm_input_sf,
+                     logtrans_input=norm_input_log,
+                     normalize_input=norm_input_zeromean)
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         print(x_train)
         #x_train = ad.X
