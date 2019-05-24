@@ -77,7 +77,7 @@ def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
     optimizer = opt.__dict__['rmsprop'](lr=lr, clipvalue=5.0)
     net.model.compile(loss=net.loss, optimizer=optimizer)
     
-    snapshot = tracemalloc.take_snapshot()
-    display_top(snapshot)
+    #snapshot = tracemalloc.take_snapshot()
+    #display_top(snapshot)
 
     return net.model
