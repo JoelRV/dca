@@ -80,7 +80,7 @@ def hyper(args):
 
     hyper_params = {
             "data": {
-                "inputData": hp.choice('d_input', (adata, adata)),
+#                "inputData": hp.choice('d_input', (adata, adata)),
                 #"inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
                 "norm_input_log": hp.choice('d_norm_log', (True, False)),
                 "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
