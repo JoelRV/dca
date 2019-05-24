@@ -87,8 +87,9 @@ def hyper(args):
     }
 
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-
-        ad = io.normalize(adata,
+        
+        ad = adata.copy()
+        ad = io.normalize(ad,
                      size_factors=norm_input_log,
                      logtrans_input=norm_input_zeromean,
                      normalize_input=norm_input_sf)
