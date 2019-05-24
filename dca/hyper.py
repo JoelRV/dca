@@ -20,6 +20,9 @@ import linecache
 import os
 import tracemalloc
 
+
+from .base_anndata import AnnData
+
 def display_top(snapshot, key_type='lineno', limit=10):
     snapshot = snapshot.filter_traces((
         tracemalloc.Filter(False, "<frozen importlib._bootstrap>"),
@@ -53,7 +56,7 @@ def hyper(args):
     adata = io.read_dataset(args.input,
                             transpose=(not args.transpose),
                             test_split=False)
-    adata = adata._replace(isbacked=True)                        
+    adata.isbacked=True                      
 #    adata = io.normalize(adata,
 #                         size_factors=args.sizefactors,
 #                         logtrans_input=args.loginput,
