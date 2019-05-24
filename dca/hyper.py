@@ -52,8 +52,22 @@ tracemalloc.start()
 
 
 
+
+
+
+
 def hyper(args):
+    
     adata = io.read_dataset(args.input,
+                        transpose=(not args.transpose),
+                        test_split=False)
+
+    adata.write(os.path.join(args.outputdir, 'anndatabckup.h5ad'))
+    
+    del adata
+    
+    
+    adata = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
                             transpose=(not args.transpose),
                             test_split=False)
 #    adata.isbacked=True                      
