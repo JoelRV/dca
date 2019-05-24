@@ -62,16 +62,16 @@ def hyper(args):
                         transpose=(not args.transpose),
                         test_split=False)
 
-    adata.write(os.path.join(args.outputdir, 'anndatabckup.h5ad'))
-    adata.write(os.path.join(args.outputdir, 'anndatabckup.h5ad'))
-    
-    del adata
-    
-    
-#    adata = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
-#                            transpose=False,
-#                            test_split=False)
-    adata = os.path.join(args.outputdir, 'anndatabckup.h5ad')
+#    adata.write(os.path.join(args.outputdir, 'anndatabckup.h5ad'))
+#    adata.write(os.path.join(args.outputdir, 'anndatabckup.h5ad'))
+#    
+#    del adata
+#    
+#    
+##    adata = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
+##                            transpose=False,
+##                            test_split=False)
+#    adata = os.path.join(args.outputdir, 'anndatabckup.h5ad')
 #    adata.isbacked=True                      
 #    adata = io.normalize(adata,
 #                         size_factors=args.sizefactors,
@@ -105,23 +105,21 @@ def hyper(args):
                 }
     }
 
-#    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
-#        
-#        ad = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
-#                            transpose=False,
-#                            test_split=False)
-#        ad = io.normalize(ad,
-#                     size_factors=norm_input_sf,
-#                     logtrans_input=norm_input_log,
-#                     normalize_input=norm_input_zeromean)
-#                     
-#        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-#        print(x_train)
-#        #x_train = ad.X
-#        y_train = ad.raw.X
-#        print(y_train)
-#        gc.collect()
-#        return (x_train, y_train),
+    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
+        
+        ad = adata.copy()
+        ad = io.normalize(ad,
+                     size_factors=norm_input_sf,
+                     logtrans_input=norm_input_log,
+                     normalize_input=norm_input_zeromean)
+                     
+        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
+        print(x_train)
+        #x_train = ad.X
+        y_train = adata.raw.X
+        print(y_train)
+        gc.collect()
+        return (x_train, y_train),
 
 #    def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
 #                 dropout, input_dropout, ridge, l1_enc_coef):
@@ -158,7 +156,7 @@ def hyper(args):
 
     output_dir = os.path.join(args.outputdir, 'hyperopt_results')
     objective = CompileFN('autoencoder_hyperpar_db', 'myexp1',
-                          data_fn=data.data_fn,
+                          data_fn=data_fn,
                           model_fn=model.model_fn,
                           loss_metric='loss',
                           loss_metric_mode='min',

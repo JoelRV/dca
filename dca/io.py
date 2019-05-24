@@ -90,10 +90,10 @@ def normalize(adata, filter_min_counts=True, size_factors=True, normalize_input=
         sc.pp.filter_genes(adata, min_counts=1)
         sc.pp.filter_cells(adata, min_counts=1)
 
-    if size_factors or normalize_input or logtrans_input:
-        adata.raw = adata.copy()
-    else:
-        adata.raw = adata
+#    if size_factors or normalize_input or logtrans_input:
+#        adata.raw = adata.copy()
+#    else:
+#        adata.raw = adata
 
     if size_factors:
         sc.pp.normalize_per_cell(adata)
