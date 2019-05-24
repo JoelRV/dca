@@ -56,7 +56,7 @@ def hyper(args):
     adata = io.read_dataset(args.input,
                             transpose=(not args.transpose),
                             test_split=False)
-    adata.isbacked=True                      
+#    adata.isbacked=True                      
 #    adata = io.normalize(adata,
 #                         size_factors=args.sizefactors,
 #                         logtrans_input=args.loginput,
