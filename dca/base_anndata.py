@@ -45,13 +45,13 @@ except ImportError:
         def __rep__():
             return 'mock zappy.base.ZappyArray'
 
-from . import h5py
-from .layers import AnnDataLayers
-
-from . import utils
-from .utils import Index, get_n_items_idx, unpack_index
-from .logging import anndata_logger as logger
-from .compat import PathLike
+#from . import h5py
+#from .layers import AnnDataLayers
+#
+#from . import utils
+#from .utils import Index, get_n_items_idx, unpack_index
+#from .logging import anndata_logger as logger
+#from .compat import PathLike
 
 
 class StorageType(Enum):
