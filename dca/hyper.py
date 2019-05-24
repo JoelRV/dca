@@ -20,6 +20,7 @@ import linecache
 import os
 import tracemalloc
 
+import AnnData
 
 #from .base_anndata import AnnData
 
