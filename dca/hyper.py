@@ -105,7 +105,7 @@ def hyper(args):
 
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
         
-        ad = adata.copy(filename = os.path.join(args.outputdir, 'anndatabckup_datafn.h5ad'))
+        ad = adata.copy(filename = 'anndatabckup_datafn.h5ad')
         ad = io.normalize(ad,
                      size_factors=norm_input_sf,
                      logtrans_input=norm_input_log,
