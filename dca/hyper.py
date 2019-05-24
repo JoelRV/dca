@@ -62,10 +62,10 @@ def hyper(args):
     hyper_params = {
             "data": {
 #                "inputData": hp.choice('d_input', (adata, adata)),
-#                "inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
-#                "norm_input_log": hp.choice('d_norm_log', (True, False)),
-#                "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
-#                "norm_input_sf": hp.choice('d_norm_sf', (True, False)),
+                #"inTranspose": hp.choice('d_inTranspose', (args.transpose, args.transpose)),
+                "norm_input_log": hp.choice('d_norm_log', (True, False)),
+                "norm_input_zeromean": hp.choice('d_norm_zeromean', (True, False)),
+                "norm_input_sf": hp.choice('d_norm_sf', (True, False)),
                 },
             "model": {
                 "lr": hp.loguniform("m_lr", np.log(1e-3), np.log(1e-2)),
@@ -86,10 +86,13 @@ def hyper(args):
                 }
     }
 
-    def data_fn():
+    def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
 
-
-        x_train = {'count': adata.X, 'size_factors': adata.obs.size_factors}
+        ad = io.normalize(adata,
+                     size_factors=norm_input_log,
+                     logtrans_input=norm_input_zeromean,
+                     normalize_input=norm_input_sf)
+        x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         #x_train = ad.X
         y_train = adata.raw.X
         gc.collect()
