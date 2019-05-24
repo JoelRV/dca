@@ -54,10 +54,10 @@ def hyper(args):
                             transpose=(not args.transpose),
                             test_split=False)
                             
-    adata = io.normalize(adata,
-                         size_factors=args.sizefactors,
-                         logtrans_input=args.loginput,
-                         normalize_input=args.norminput)
+#    adata = io.normalize(adata,
+#                         size_factors=args.sizefactors,
+#                         logtrans_input=args.loginput,
+#                         normalize_input=args.norminput)
 
     hyper_params = {
             "data": {
