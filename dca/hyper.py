@@ -68,7 +68,7 @@ def hyper(args):
     
     
     adata = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
-                            transpose=(not args.transpose),
+                            transpose=False,
                             test_split=False)
 #    adata.isbacked=True                      
 #    adata = io.normalize(adata,
