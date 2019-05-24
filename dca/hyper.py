@@ -107,7 +107,9 @@ def hyper(args):
 
     def data_fn(norm_input_log, norm_input_zeromean, norm_input_sf):
         
-        ad = AnnData(filename = os.path.join(args.outputdir, 'anndatabckup.h5ad'))
+        ad = io.read_dataset(os.path.join(args.outputdir, 'anndatabckup.h5ad'),
+                            transpose=False,
+                            test_split=False)
         ad = io.normalize(ad,
                      size_factors=norm_input_sf,
                      logtrans_input=norm_input_log,
@@ -116,7 +118,7 @@ def hyper(args):
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
         print(x_train)
         #x_train = ad.X
-        y_train = adata.X
+        y_train = ad.raw.X
         print(y_train)
         gc.collect()
         return (x_train, y_train),
