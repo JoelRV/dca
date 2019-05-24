@@ -21,7 +21,7 @@ import os
 import tracemalloc
 
 
-from .base_anndata import AnnData
+#from .base_anndata import AnnData
 
 def display_top(snapshot, key_type='lineno', limit=10):
     snapshot = snapshot.filter_traces((
