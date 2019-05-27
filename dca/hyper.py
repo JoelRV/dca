@@ -114,10 +114,10 @@ def hyper(args):
                      normalize_input=norm_input_zeromean)
                      
         x_train = {'count': ad.X, 'size_factors': ad.obs.size_factors}
-        print(x_train)
+#        print(x_train)
         #x_train = ad.X
         y_train = adata.X
-        print(y_train)
+#        print(y_train)
         gc.collect()
         return (x_train, y_train),
 
