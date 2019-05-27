@@ -54,8 +54,8 @@ def model_fn(train_data, lr, hidden_size, activation, aetype, batchnorm,
     
     print("Backend is " + K.backend())
     print(" MB size of train_data" + str(getsizeof(train_data)/1000000))
-#        if K.backend() == 'tensorflow':
-#          K.clear_session()
+        if K.backend() == 'tensorflow':
+          K.clear_session()
     gc.collect()
     print(train_data[1].shape[1])
     net = AE_types[aetype](train_data[1].shape[1],
