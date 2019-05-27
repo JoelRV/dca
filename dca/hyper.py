@@ -48,7 +48,7 @@ def display_top(snapshot, key_type='lineno', limit=10):
     total = sum(stat.size for stat in top_stats)
     print("Total allocated size: %.1f KiB" % (total / 1024))
 
-tracemalloc.start()
+#tracemalloc.start()
 
 
 
