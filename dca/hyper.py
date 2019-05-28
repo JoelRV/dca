@@ -5,7 +5,7 @@ from sys import getsizeof
 
 import numpy as np
 from kopt import CompileFN, test_fn
-from hyperopt import fmin, tpe, hp, Trials
+from hyperopt import fmin, tpe, hp, Trials, space_eval
 import keras.optimizers as opt
 from keras import backend as K
 
@@ -182,7 +182,8 @@ def hyper(args):
     #TODO: map indices in "best" back to choice-based hyperpars before saving
     with open(os.path.join(output_dir, 'best.json'), 'wt') as f:
         json.dump(best, f, sort_keys=True, indent=4)
+        json.dump(space_eval(hyper_params, trials.argmin), f, sort_keys=True, indent=4)
 
     print(best)
-
+    print(space_eval(hyper_params, trials.argmin))
     #TODO: not just save the best conf but also train the model with these params
