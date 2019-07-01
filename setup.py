@@ -8,7 +8,7 @@ setup(
     author_email="gokcen.eraslan@gmail.com",
     packages=['dca'],
     install_requires=['numpy>=1.7',
-                      'keras==2.2.0',
+                      'keras==2.2.2',
                       'h5py',
                       'six==1.12.0',
                       'scikit-learn',
