@@ -247,7 +247,7 @@ def _normalize_index(index, names):
     def name_idx(i):
         if isinstance(i, str):
             # `where` returns an 1-tuple (1D array) of found indices
-            i_found = np.where(names == i)[0]
+            i_found = tf.where(names == i)[0]
             if len(i_found) == 0:  # returns array of length 0 if nothing is found
                 raise IndexError(
                     'Key "{}" is not valid observation/variable name/index.'
@@ -1349,7 +1349,7 @@ class AnnData(metaclass=utils.DeprecationMixinMeta):
                     if np.array(uns[k + '_colors']).ndim == 0:
                         uns[k + '_colors'] = np.array(uns[k + '_colors'])[None]
                     uns[k + '_colors'] = np.array(uns[k + '_colors'])[
-                        np.where(np.in1d(
+                        tf.where(np.in1d(
                             all_categories, df_sub[k].cat.categories))[0]]
 
     def rename_categories(self, key: str, categories: Sequence[Any]):
