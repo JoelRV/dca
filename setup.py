@@ -15,7 +15,7 @@ setup(
                       'scanpy',
                       'kopt',
                       'pandas',
-                      'tenserflow==1.13.1'#for preprocessing
+                      'tensorflow==1.13.1'#for preprocessing
                       ],
     url='https://github.com/theislab/dca',
     entry_points={
