@@ -8,14 +8,14 @@ setup(
     author_email="gokcen.eraslan@gmail.com",
     packages=['dca'],
     install_requires=['numpy>=1.7',
-                      'keras==2.2.4',
+                      'keras>=2.2.4',
                       'h5py',
                       'six==1.12.0',
                       'scikit-learn',
                       'scanpy',
                       'kopt',
                       'pandas',
-                      'tensorflow==1.13.1'#for preprocessing
+                      'tensorflow>=1.13.1'#for preprocessing
                       ],
     url='https://github.com/theislab/dca',
     entry_points={
