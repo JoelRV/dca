@@ -93,8 +93,8 @@ class NB(object):
                         tf.verify_tensor_all_finite(t1, 't1 has inf/nans'),
                         tf.verify_tensor_all_finite(t2, 't2 has inf/nans')]
 
-                tf.compat.v1.summary.histogram('t1', t1)
-                tf.compat.v1.summary.histogram('t2', t2)
+                tf.summary.histogram('t1', t1)
+                tf.summary.histogram('t2', t2)
 
                 with tf.control_dependencies(assert_ops):
                     final = t1 + t2
@@ -148,9 +148,9 @@ class ZINB(NB):
             result = _nan2inf(result)
 
             if self.debug:
-                tf.compat.v1.summary.histogram('nb_case', nb_case)
-                tf.compat.v1.summary.histogram('zero_nb', zero_nb)
-                tf.compat.v1.summary.histogram('zero_case', zero_case)
-                tf.compat.v1.summary.histogram('ridge', ridge)
+                tf.summary.histogram('nb_case', nb_case)
+                tf.summary.histogram('zero_nb', zero_nb)
+                tf.summary.histogram('zero_case', zero_case)
+                tf.summary.histogram('ridge', ridge)
 
         return result

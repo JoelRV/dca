@@ -76,7 +76,7 @@ def train(adata, network, output_dir=None, optimizer='rmsprop', learning_rate=No
     inputs = {'count': adata.X, 'size_factors': adata.obs.size_factors}
 
     if output_subset:
-        gene_idx = [tf.where(adata.raw.var_names == x)[0][0] for x in output_subset]
+        gene_idx = [np.where(adata.raw.var_names == x)[0][0] for x in output_subset]
         output = adata.raw.X[:, gene_idx] if use_raw_as_output else adata.X[:, gene_idx]
     else:
         output = adata.raw.X if use_raw_as_output else adata.X
@@ -100,7 +100,7 @@ def train_with_args(args):
     # set seed for reproducibility
     random.seed(42)
     np.random.seed(42)
-    tf.compat.v1.set_random_seed(42)
+    tf.set_random_seed(42)
     os.environ['PYTHONHASHSEED'] = '0'
 
     # do hyperpar optimization and exit
@@ -166,7 +166,7 @@ def train_with_args(args):
                    tensorboard=args.tensorboard)
 
     if genelist:
-        predict_columns = adata.var_names[[tf.where(adata.var_names==x)[0][0] for x in genelist]]
+        predict_columns = adata.var_names[[np.where(adata.var_names==x)[0][0] for x in genelist]]
     else:
         predict_columns = adata.var_names
 
