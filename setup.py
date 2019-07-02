@@ -14,7 +14,8 @@ setup(
                       'scikit-learn',
                       'scanpy',
                       'kopt',
-                      'pandas'
+                      'pandas',
+                      'tensorflow>=1.13.1'#for preprocessing
                       ],
     url='https://github.com/theislab/dca',
     entry_points={
